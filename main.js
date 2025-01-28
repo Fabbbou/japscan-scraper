@@ -49,6 +49,8 @@ function createWebtoonFolder(screenshotFolder, webtoonName, dryRun) {
  * chapterNumber is used to navigate and scrape the chapter page
  */
 async function scrapeChaptersInfo(page) {
+    await breakWhenCFProtection(page);
+
     const elements = await page.$$('.chapters_list > a');
     //for in this elements in reverse order
     let promises = elements.reverse().map(async (element, index) => {
@@ -105,21 +107,28 @@ async function scrapePngFromDiv(index, div, chapterPath, dryRun) {
     }
 }
 
-async function navigateAndDownloadChapter(page, chapterIndex, chapters, webtoonFolder, patternChapterUrl, dryRun, timeout) {
+async function breakWhenCFProtection(page) {
+    const CFRayId = await page.$('.ray-id');
+    if(CFRayId) {
+        console.log('CF detected, stopping the process');
+        process.exit(1);
+    }
+}
+
+async function navigateToChapter(page, urlToChapter, timeout) {
     //go to chapter page
-    let chapterNumber = chapters[chapterIndex].chapterNumber;
-    let urlToChapter = patternChapterUrl.replace('<chapterNumber>', chapterNumber)
     page.goto(urlToChapter, {timeout: timeout});
     await page.waitForNavigation({ waitUntil: 'networkidle0', timeout: timeout});
     
+    await breakWhenCFProtection(page);
+
     //remove annoying dropdown that mess with screenshots
     await page.evaluate(() => {
         var elements = document.querySelectorAll('.sticky-top');
         elements.forEach(element => element.remove());
     });
 
-    //download chapter
-    await scrapeChapter(page, webtoonFolder, chapters[chapterIndex].chapterName, dryRun);
+    
 }
 
 //----------------------------------------------
@@ -144,10 +153,17 @@ async function main(config) {
     const page = pages[0];
 
     const chapters = await scrapeChaptersInfo(page);
-
-    for (let i = config.startAtChapterNumber; i < chapters.length; i++) {
-        await navigateAndDownloadChapter(page, i, chapters, webtoonFolder, config.patternChapterUrl, config.dryRun, config.navigationTimeout);
-        console.log(`episode ${i} downloaded`);
+    try{
+        for (let i = config.startAtChapterNumber; i < chapters.length; i++) {
+            let chapterObj = chapters[i];
+            let urlToChapter = config.patternChapterUrl.replace('<chapterNumber>', chapterObj.chapterNumber);
+            await navigateToChapter(page, urlToChapter, config.navigationTimeout);
+            await scrapeChapter(page, webtoonFolder, chapterObj.chapterName, config.dryRun);
+            console.log(`chapter index${i} downloaded - ${urlToChapter}`);
+        }
+    }catch(e){
+        console.error(`error downloading chapter ${i}`);
+        console.error(e);
     }
 
     browser.disconnect();
