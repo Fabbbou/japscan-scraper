@@ -1,0 +1,22 @@
+# port of the chrome debug port, depends on the --remote-debugging-port=9222 you put when launching chrome
+chromeDebugPort: 9222
+
+outputPath: "screenshots"
+
+# the name of your webtoon/manga
+bookName: "bookName"
+
+# replace bookName by the name of the book you want to scrape (take it from the site url by going to the reader on one chapter)
+# /!\ do not change <chapterNumber> as it will be replaced by the script
+# the url pattern of the chapter page in japscan
+patternChapterUrl: "https://www.japscan.lol/lecture-en-ligne/bookName/<chapterNumber>/1.html"
+
+# the number of the first chapter to start with for scraping
+# some books can have a prologue chapter, or FAQ chapter, etc, so be careful about the numbering
+startAtChapterNumber: 1
+
+# puppeeter navigation timeout, so we dont fail just because japscan is slow (maybe they slow on purpose? who knows)
+navigationTimeout: 120000
+
+# prevent the script to actually do anything but scraping to test the configuration for example
+dryRun: true
