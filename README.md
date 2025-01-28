@@ -23,6 +23,7 @@ This automation allows you to scrap a book from Japscan by first manually passin
     - you can just run the script, it will print you the example
 3. Manually launch Google chrome, then:
     - Go to your Japscan chapter list page of the manga/webtoon you wanna dl.
+        - **Keep only one tab open, not tested in other conditions**
         - example https://www.japscan.lol/manga/one-piece/
     - pass the cloudflare wall manually if needed
     - click once in the blank part of the page to trigger Ads, and then its ready !
