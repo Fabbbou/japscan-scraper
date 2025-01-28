@@ -1,8 +1,7 @@
 # Japscan SemiAuto bulk download
 This automation allows you to launch a Japscan scrapper but by first manually passing Cloudflare wall.
 
-/!\ This is not a Headless scraper, but more an automation for your google chrome. 
-
+**/!\ This is not a Headless scraper, but more an automation for your google chrome.**
 ## Disclaimer
 - This is still a bit manual, no cloudflare skipping (because cloudflare is always changing)
 - Do not abuse: Japscan will kill this project by simply changing the site if this is used too much
