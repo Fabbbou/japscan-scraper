@@ -109,8 +109,8 @@ async function navigateAndDownloadChapter(page, chapterIndex, chapters, webtoonF
     //go to chapter page
     let chapterNumber = chapters[chapterIndex].chapterNumber;
     let urlToChapter = patternChapterUrl.replace('<chapterNumber>', chapterNumber)
-    await page.goto(urlToChapter, chapterNumber, {timeout});
-    await page.waitForNavigation({ waitUntil: 'networkidle0' , timeout});
+    page.goto(urlToChapter, {timeout: timeout});
+    await page.waitForNavigation({ waitUntil: 'networkidle0', timeout: timeout});
     
     //remove annoying dropdown that mess with screenshots
     await page.evaluate(() => {

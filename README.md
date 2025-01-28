@@ -8,6 +8,7 @@ This automation allows you to scrap a book from Japscan by first manually passin
 - Do not abuse: Japscan will kill this project by simply changing the site if this is used too much
 - Tested only once with one book
 
+
 ## Requirements
 - NodeJS >=18
     - with `puppeteer-core` only 
@@ -27,7 +28,7 @@ This automation allows you to scrap a book from Japscan by first manually passin
         - **Keep only one tab open, not tested in other conditions**
         - example https://www.japscan.lol/manga/one-piece/
     - pass the cloudflare wall manually if needed
-    - click once in the blank part of the page to trigger Ads, and then its ready !
+    - click few times in the blank part of the page to trigger Ads, and then its ready !
 4. Launch the script:
     - `node main.js`
     - keep the Google Chrome on always focused, or it will not download!
