@@ -1,5 +1,5 @@
 # Japscan SemiAuto bulk download
-This automation allows you to launch a Japscan scrapper but by first manually passing Cloudflare wall.
+This automation allows you to scrap a book from Japscan by first manually passing Cloudflare wall and Ads.
 
 
 ## Disclaimer
