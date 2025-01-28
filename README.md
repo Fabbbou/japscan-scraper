@@ -10,7 +10,7 @@ This automation allows you to scrap a book from Japscan by first manually passin
 
 ## Requirements
 - NodeJS >=18
-    - with puppeteer-core only 
+    - with `puppeteer-core` only 
 - Google Chrome (stable)
 
 ## Install
