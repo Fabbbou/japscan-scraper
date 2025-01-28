@@ -57,8 +57,10 @@ async function scrapeChaptersInfo(page) {
         const text = await element.getProperty('innerText');
         let chapterName = (await text.jsonValue()).trim();
         return {
-            chapterName,
-            chapterNumber: chapterName.replaceAll('Chapitre', '').trim(),
+            //remove special chars, keep only one space between
+            chapterName: chapterName.trim().replaceAll(/\W/g,' ').replace(/\s+/g, " "),
+            //remove non-digit chars
+            chapterNumber: chapterName.replaceAll(/\W|[a-z]/gi, '').trim(),
         };
     });
     return Promise.all(promises);
@@ -162,7 +164,7 @@ async function main(config) {
             console.log(`chapter index${i} downloaded - ${urlToChapter}`);
         }
     }catch(e){
-        console.error(`error downloading chapter ${i}`);
+        console.error(`error downloading chapter`);
         console.error(e);
     }
 
