@@ -19,4 +19,4 @@ startAtChapterNumber: 1
 navigationTimeout: 120000
 
 # prevent the script to actually do anything but scraping to test the configuration for example
-dryRun: true
+dryRun: false
