@@ -1,29 +1,21 @@
 import puppeteer from 'puppeteer-core';
 import fs from 'fs';
-import yaml from 'js-yaml';
 
-//----------------------------------------------
-// Config checking
-//----------------------------------------------
-
-//stop process if config file is not found
-if (!fs.existsSync('config.yml')) {
-    console.error('config.yml not found');
-    console.error('please create a config.yml file following example_config.yml structure');
-    process.exit(1);
-}
-
-//read a config yaml file
-const config = yaml.load(fs.readFileSync('config.yml'));
+import config from './src/config-loader.js';
 
 //----------------------------------------------
 // Functions
 //----------------------------------------------
 
 async function getWebSocketDebuggerUrl(port) {
-    const response = await fetch(`http://127.0.0.1:${port}/json/version`);
-    const data = await response.json();
-    return data.webSocketDebuggerUrl;
+    try{
+        const response = await fetch(`http://127.0.0.1:${port}/json/version`);
+        const data = await response.json();
+        return data.webSocketDebuggerUrl;
+    }catch(e){
+        console.error('Error getting websocket, maybe chrome is not running in debug mode?');
+        process.exit(1);
+    }
 }
 
 function createWebtoonFolder(screenshotFolder, webtoonName, dryRun) {
@@ -92,7 +84,7 @@ function mkdirDryRun(dirPath, dryRun) {
         if (dryRun) {
             console.log(`dry run: skipping creating dir ${dirPath}`);
         } else {
-            fs.mkdirSync(dirPath);
+            fs.mkdirSync(dirPath, { recursive: true });
             console.log(`creating dir ${dirPath}`);
         }
     }
