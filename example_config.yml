@@ -1,6 +1,7 @@
 # port of the chrome debug port, depends on the --remote-debugging-port=9222 you put when launching chrome
 chromeDebugPort: 9222
 
+# the path where the screenshots will be saved, you can leave it as is
 outputPath: "screenshots"
 
 # the name of your webtoon/manga
@@ -11,12 +12,22 @@ bookName: "bookName"
 # the url pattern of the chapter page in japscan
 patternChapterUrl: "https://www.japscan.lol/lecture-en-ligne/bookName/<chapterNumber>/1.html"
 
-# the number of the first chapter to start with for scraping
-# some books can have a prologue chapter, or FAQ chapter, etc, so be careful about the numbering
-startAtChapterNumber: 1
+# default process start at first chapter
+# uncomment to start from the chapter title you want
+# startAtChapter: "Chapitre 13"
+
+# default process end at last chapter
+# uncomment to end when reaching the chapter title you want (inclusive)
+# endAtChapter: "Chapitre 13"
 
 # puppeeter navigation timeout, so we dont fail just because japscan is slow (maybe they slow on purpose? who knows)
 navigationTimeout: 120000
 
+#the IP address of your chome instance, if you are running it on the same machine as the script, you can leave it as is
+chromeIpAddressOrDomain: "127.0.0.1"
+
 # prevent the script to actually do anything but scraping to test the configuration for example
 dryRun: false
+
+#debug mode to print more information
+debug: true
